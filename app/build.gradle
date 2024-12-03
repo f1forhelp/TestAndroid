@@ -2,9 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+android.ndkVersion = "23.1.7779620"
 android {
     namespace 'com.example.testandroid'
     compileSdk 34
+    ndkVersion "23.1.7779620"
+    ndkPath "/Users/utkarshsharma/Library/Android/sdk/ndk/23.1.7779620"
 
     defaultConfig {
         applicationId "com.example.testandroid"
