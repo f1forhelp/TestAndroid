@@ -2,12 +2,37 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('./app/key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 android.ndkVersion = "23.1.7779620"
 android {
+//Uncomment to enable packaging of unity binary [This dosent include core unity library].
+// Exclude specific .so files during the packaging process
+
+    packagingOptions {
+        exclude "**/libunity.so"
+        exclude "**/libmain.so"
+        exclude "**/lib_burst_generated.so"
+        exclude "**/libAndroidCpuUsage.so"
+        exclude "**/libil2cpp.so"
+    }
     namespace 'com.example.testandroid'
     compileSdk 34
     ndkVersion "23.1.7779620"
     ndkPath "/Users/utkarshsharma/Library/Android/sdk/ndk/23.1.7779620"
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
 
     defaultConfig {
         applicationId "com.example.testandroid"
@@ -18,9 +43,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'armeabi-v7a', 'x86'
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64" , "arm64"
         }
+        signingConfig signingConfigs.release
     }
+
+
+
 
     buildTypes {
         release {
@@ -35,7 +64,7 @@ android {
 }
 
 dependencies {
-
+    implementation libs.soloader
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity

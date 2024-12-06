@@ -24,5 +24,19 @@
         android:layout_height="wrap_content"
         android:text="Launch Unity"
         />
+    <Button
+        android:layout_marginTop="18dp"
+        android:id="@+id/bakeUnity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bake Unity"
+        />
+    <Button
+        android:layout_marginTop="18dp"
+        android:id="@+id/showLoadedLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Loaed Library"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
